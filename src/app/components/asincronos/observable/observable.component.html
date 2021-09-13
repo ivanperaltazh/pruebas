@@ -1,0 +1,280 @@
+<div class="toolbar px-3 mb-2 rounded" role="banner">
+  <img
+    width="40"  alt="Angular Logo"
+    src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTAgMjUwIj4KICAgIDxwYXRoIGZpbGw9IiNERDAwMzEiIGQ9Ik0xMjUgMzBMMzEuOSA2My4ybDE0LjIgMTIzLjFMMTI1IDIzMGw3OC45LTQzLjcgMTQuMi0xMjMuMXoiIC8+CiAgICA8cGF0aCBmaWxsPSIjQzMwMDJGIiBkPSJNMTI1IDMwdjIyLjItLjFWMjMwbDc4LjktNDMuNyAxNC4yLTEyMy4xTDEyNSAzMHoiIC8+CiAgICA8cGF0aCAgZmlsbD0iI0ZGRkZGRiIgZD0iTTEyNSA1Mi4xTDY2LjggMTgyLjZoMjEuN2wxMS43LTI5LjJoNDkuNGwxMS43IDI5LjJIMTgzTDEyNSA1Mi4xem0xNyA4My4zaC0zNGwxNy00MC45IDE3IDQwLjl6IiAvPgogIDwvc3ZnPg=="
+  />
+  <span>Observables Rxjs</span>
+    <div class="spacer"></div>
+    <a class="btn btn-secondary" 
+    routerLink="/varios">Varios</a>
+    <!-- agrega clase css routerLinkActive="router-link-active"  -->
+  </div>
+
+<h4 class="text-center">Libros</h4>
+<div class="row">
+  <div class="col-6">
+    <h5>Titulo</h5>
+    <ul>
+      <li *ngFor="let libro of libros">
+     <b>-  </b> {{ libro.titulo }}
+      </li>
+    </ul>
+  </div>
+
+  <div class="col-6">
+    <h5>   Autor</h5>
+    <ul>
+      <li *ngFor="let libro of libros">
+      {{ libro.autor }}
+      </li>
+    </ul>
+  </div>
+
+</div>
+
+
+<hr class="my-3">
+
+<h4 class="text-center">Operadores, mirar ejecución en consola </h4>
+
+<div class="bg-light p-2">
+<h6>Observable() <button class="btn btn-secondary" (click)="testOperadorCreate()"> ver </button></h6>
+<code> <span class="text-white">{{</span>
+ <pre>
+  testOperadorCreate() { <span class="text-secondary">//Emite secuencia 0, 1</span>
+    let source = new Observable( observer => { observer.next(0); observer.next(1); observer.complete();});
+    source.subscribe(x => console.log(x));
+  }
+</pre>
+ <span class="text-white">}<!---->}</span>
+</code>
+</div>
+
+<hr class="my-3">
+
+<div class="bg-light p-2">
+  <h6>interval() 
+    <button class="btn btn-secondary" (click)="testOperadorInterval()"> ver </button>
+    <button class="btn btn-secondary mx-2" (click)="unsubscribeInterval()"> stop </button>
+  </h6>
+  <code> <span class="text-white">{{</span>
+   <pre>
+    testOperadorInterval() {
+      let source = interval(1000); <span class="text-secondary">//Emite secuencia 0, 1, 2, ... cada 1 segundo</span> 
+      this.sourceInterval =  source.subscribe(x => console.log(x));
+    }
+
+    <span class="text-secondary">//Stop</span>
+    unsubscribeInterval(){
+      this.sourceInterval.unsubscribe();
+    }
+  </pre>
+   <span class="text-white">}<!---->}</span>
+  </code>
+  </div>
+
+
+<hr class="my-3">
+
+<div class="bg-light p-2">
+  <h6>of()
+    <button class="btn btn-secondary" (click)="testOperadorOf()"> ver </button>
+  </h6>
+  <code> <span class="text-white">{{</span>
+   <pre>
+    <span class="text-secondary"> Convierte los argumentos en una secuencia observable. 
+
+    </span>
+
+    testOperadorOf() {
+      let source = of('a','b','c'); <span class="text-secondary"> //Emite secuencia ‘a’, ‘b’ y ‘c’ </span>
+      source.subscribe(x => console.log(x));
+    }
+  </pre>
+   <span class="text-white">}<!---->}</span>
+  </code>
+</div>
+
+
+<hr class="my-3">
+
+<div class="bg-light p-2">
+  <h6>from()
+    <button class="btn btn-secondary" (click)="testOperadorFrom2()"> ver </button>
+  </h6>
+  <code> <span class="text-white">{{</span>
+   <pre>
+    <span class="text-secondary">
+     Este operador puede usarse para convertir una promesa en un observable
+     Para emitir matrices e iterables,  como una secuencia o una cadena como
+     una secuencia de caracteres. </span> 
+
+    testOperadorFrom2() {
+      let source = from([{nombre: 'Miguel', edad: 30}, {nombre: 'Juan', edad: 35}]);
+      source.subscribe(x => console.log(x));
+    }
+  
+  </pre>
+   <span class="text-white">}<!---->}</span>
+  </code>
+</div>
+
+
+
+<hr class="my-3">
+
+<div class="bg-light p-2">
+  <h6>from() y Promise
+    <button class="btn btn-secondary" (click)=" testOperadorFrom1()"> ver </button>
+  </h6>
+  <code> <span class="text-white"> {{</span>
+   <pre>
+    testOperadorFrom1() {
+      let source = from(
+        new Promise< string >( (resolve, reject) => {
+            setTimeout(() => { resolve("Valor resuelto por la Promise."); }, 2000);
+        })
+      );
+      source.subscribe(x => console.log(x));
+    }
+  </pre>
+   <span class="text-white">}<!---->}</span>
+  </code>
+</div>
+
+<hr class="my-3">
+
+<div class="bg-light p-2">
+  <h6>concat()
+    <button class="btn btn-secondary" (click)="testOperadorConcat()"> ver </button>
+  </h6>
+  <code> <span class="text-white">{{</span>
+   <pre>
+    testOperadorConcat() {
+      let source1 = of('a','b','c');
+      let source2 = of('d','e','f');
+      let source3 = concat(source1, source2);<span class="text-secondary">//Emite secuencia a, b, c, d, e, f</span> 
+      source3.subscribe(x => console.log(x));
+    }
+  </pre>
+   <span class="text-white">}<!---->}</span>
+  </code>
+</div>
+
+
+<hr class="my-3">
+
+<div class="bg-light p-2">
+  <h6>tap()
+    <button class="btn btn-secondary" (click)="testOperadorTap()"> ver </button>
+  </h6>
+  <code> <span class="text-white">{{</span>
+   <pre>
+    <span class="text-secondary">// Ahora es tap() en lugar de do()</span> 
+  testOperadorTap() {
+    let source = of('a','b','c').pipe(tap(x => console.log(x)));  <span class="text-secondary">//Emite secuencia ‘a’, ‘b’ y ‘c’, y muestra estos valores por log</span>
+    source.subscribe(x => console.log(x));
+  }
+  </pre>
+   <span class="text-white">}<!---->}</span>
+  </code>
+</div>
+
+<hr class="my-3">
+
+<div class="bg-light p-2">
+  <h6>tap() - no altera salida
+    <button class="btn btn-secondary" (click)="testOperadorTap2()"> ver </button>
+  </h6>
+  <code> <span class="text-white">{{</span>
+   <pre>
+    <span class="text-secondary">
+      // Ahora es tap() en lugar de do()
+
+      // Emite 1, 2, 3, 4, 5
+    </span> 
+    testOperadorTap2() {
+      const source = of(1, 2, 3, 4, 5).pipe(
+        tap(n => {
+          if (n > 3) {
+            <span class="text-secondary"> //throw new TypeError(`Value ${n} es mayor que 3`)</span> 
+            n = n * 3;
+          }
+        })
+       )
+       .subscribe(console.log);
+    }
+  </pre>
+   <span class="text-white">}<!---->}</span>
+  </code>
+</div>
+
+<hr class="my-3">
+
+<div class="bg-light p-2">
+  <h6>map()
+    <button class="btn btn-secondary" (click)="testOperadorMap()"> ver </button>
+  </h6>
+  <code> <span class="text-white">{{</span>
+   <pre>
+    <span class="text-secondary">
+      Aplica una función dada a cada valor emitido por la fuente 
+      Observable y emite los valores resultantes como Observable.
+
+      //Emite secuencia 0, 2, 4, ...
+    </span> 
+    testOperadorMap() {
+      let source = interval(1000).pipe(map(x => 2 * x)); 
+      source.subscribe(x => console.log(x));
+    }
+  </pre>
+   <span class="text-white">}<!---->}</span>
+  </code>
+</div>
+
+<hr class="my-3">
+
+<div class="bg-light p-2">
+  <h6>filter()
+    <button class="btn btn-secondary" (click)="testOperatorFilter()"> ver </button>
+  </h6>
+  <code> <span class="text-white">{{</span>
+   <pre>
+    <span class="text-secondary">
+      //Filtrar elementos emitidos por la fuente Observable emitiendo
+        solo aquellos que satisfacen un predicado específico.
+
+        // Emite:  2 y 4
+    </span> 
+
+    testOperatorFilter(){
+      const source = from([1, 2, 3, 4, 5]);
+      const example = source.pipe(filter(num => num % 2 === 0));
+      example.subscribe(val => console.log(`Even number: ${val}`));
+     }
+  </pre>
+   <span class="text-white">}<!---->}</span>
+  </code>
+</div>
+
+<hr class="my-3">
+
+<div class="bg-light p-2">
+  <h6>merge()
+    <button class="btn btn-secondary" (click)="testOperadorMerge()"> ver </button>
+  </h6>
+  <code> <span class="text-white">{{</span>
+   <pre>
+    <span class="text-secondary">
+     
+    </span> 
+    testOperadorMerge() {
+      let source1 = interval(1000);
+      let source2 = interval(1000).pipe(map(x => 10 * x));
+      let source3 = merge(source1, source2); <span class="text-secondary">//Emite secuencia 0, 0, 1, 10, 2, 20,...</span>
+      source3.subscribe(x => console.log(x));
+    }
+  </pre>
+   <span class="text-white">}<!---->}</span>
+  </code>
+</div>

@@ -1,0 +1,17 @@
+<p>varios works!  <a class="btn btn-secondary" routerLink="/">Promesas</a></p>
+
+
+<ng-template  #template1>
+    <p> Esta es nuestra plantilla. Se mostrará en div * ngTemplateOutlet = "myTemplateRef" </p>
+ </ng-template>
+  
+ <ng-container  *ngTemplateOutlet = "template1">
+    Este texto no se muestra
+ </ng-container>
+  
+  
+ <!-- También podemos usar un  div en lugar de ng-container -->
+  
+ <div  *ngTemplateOutlet = "template1">
+ </div> 
+ 
